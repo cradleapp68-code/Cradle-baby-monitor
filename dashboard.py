@@ -1,6 +1,5 @@
 import streamlit as st
 import time
-import pandas as pd
 import streamlit.components.v1 as components
 import paho.mqtt.client as mqtt
 import datetime
@@ -164,8 +163,12 @@ while True:
 
         # ---------- HISTORY ----------
         if len(history) > 2:
-            df = pd.DataFrame(history)
+            chart_data = {
+                "wet": [item["wet"] for item in history],
+                "stool": [item["stool"] for item in history],
+                "temp": [item["temp"] for item in history],
+            }
             st.subheader("📈 Trend Monitoring")
-            st.line_chart(df[["wet", "stool", "temp"]])
+            st.line_chart(chart_data)
 
     time.sleep(2)
